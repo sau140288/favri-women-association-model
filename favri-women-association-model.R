@@ -88,6 +88,7 @@ NPV_no_interv <-
 
 return(list(NPV_mobile_sales = NPV_interv,
             NPV_no_interv = NPV_no_interv,
+            decision = NPV_interv - NPV_no_interv, #the decision is in the trade off
             Cashflow_mobile_sales = sales_intervention_result))
 }
 
@@ -106,6 +107,11 @@ decisionSupport::plot_distributions(mcSimulation_object = women_assoc_results,
 decisionSupport::plot_distributions(mcSimulation_object = women_assoc_results, 
                                     vars = c("NPV_mobile_sales","NPV_no_interv"),
                                     method = 'boxplot')
+
+decisionSupport::plot_distributions(mcSimulation_object = women_assoc_results, 
+                                    vars = "decision",
+                                    method = 'smooth_simple_overlay', 
+                                    base_size = 7)
 
 # Cashflow 
 
