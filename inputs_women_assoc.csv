@@ -2,7 +2,7 @@ variable,lower ,median,upper,distribution,label
 number_of_years,5,,5,const,Number of years for garden simulation
 discount_rate,5,,8,posnorm,Discounting factor
 ,,,,,
-CV_value,0.1,,0.4,posnorm,Coefficient of variation for our school garden intervention (%)
+CV_value,0.1,,0.4,tnorm_0_1,Coefficient of variation for our school garden intervention (%)
 inflation_rate,1,,5,posnorm,Inflation rate (%)
 cost_of_establishment_meetings,1,,3,posnorm,cost of establishment meetings (million VND)
 cost_of_promotion,1,,5,posnorm,Establishment costs of marketing (million VND)
@@ -10,3 +10,9 @@ cost_of_space_rent,3,,12,posnorm,the annual cost of renting space (million VND)
 cost_of_regular_meetings,0.3,,5,posnorm,the annual cost of meetings (million VND)
 cost_of_cleaning_event,2,,6,posnorm,the annual cost of cleaning space for veg sell (million VND)
 cost_of_communication,1,,5,posnorm,the annual cost of communcation (million VND)
+if_accessible,0.1,,0.7,tnorm_0_1,chance that veg are accessible (%) 
+diverse_veg_benefit,1,,10,posnorm,the annual Government benefit of saving on health expense (million VND)
+knowledge_exchange_benefit,1,,5,posnorm,savings on community outreach program (million VND)
+gender_equality_benefit,1,,4,posnorm,savings on the cost of gender program (million VND)
+reputation_benefit,2,,8,posnorm,added economic benefit of reputation gains (million VND)
+enviromental_benefit,3,,9,posnorm,saving on enviroment program (million VND)
