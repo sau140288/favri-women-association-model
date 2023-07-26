@@ -16,5 +16,5 @@ diverse_veg_benefit,1,,10,posnorm,the annual Government benefit of saving on hea
 knowledge_exchange_benefit,1,,5,posnorm,savings on community outreach program (million VND/year)
 gender_equality_benefit,1,,4,posnorm,savings on the cost of gender program (million VND/year)
 reputation_benefit,2,,8,posnorm,added economic benefit of reputation gains (million VND/year)
-enviromental_benefit,3,,9,posnorm,saving on enviroment program (million VND/year)
+environmental_benefit,3,,9,posnorm,saving on enviroment program (million VND/year)
 percentage_of_sales,10,,50,posnorm,revenue from farmer's sales (million VND/year)

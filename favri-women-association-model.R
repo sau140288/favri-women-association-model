@@ -30,8 +30,9 @@ women_assoc_function <- function(x, varnames){
                         relative_trend = inflation_rate,
                        n = number_of_years)
   
-  #assumningt that in the first year we establishment costs and running costs
+  #assumning that in the first year we establishment costs and running costs
   total_costs[1]<-total_costs[1]+one_time_establishment_costs
+  
   
   # Benefits ####
   
@@ -45,45 +46,65 @@ women_assoc_function <- function(x, varnames){
   healthy_veggies_benefit <- diverse_veg_benefit +  # savings on programs for fresh veggies
                             knowledge_exchange_benefit + # savings on community outreach program
                             gender_equality_benefit + # savings on the costs of gender programs
-                            reputation_benefits + # added economic benefit of reputation gains
-                            environmental_benefits # savings on environmental programs
-    
-  total_benefits <-  vv(healthy_veggies_benefit, vv(healthy_veggies_benefit,# savings on health related expenses
+                            reputation_benefit + # added economic benefit of reputation gains
+                            environmental_benefit # savings on environmental programs
+  
+  total_benefits <-  vv(healthy_veggies_benefit + # savings on health related expenses
+                          percentage_of_sales, # revenue from farmer's sales
                                 var_CV = CV_value, 
                                 n = number_of_years, 
                                 relative_trend = inflation_rate) * if_accessible #conditional on access
            
  sales_intervention_result <- total_benefits - total_costs
                         
-# End ####
-
+# Alternative ####
+# what might the Women's Assoc. do instead 
+ # with the same kinds of outcomes in mind
+ # what action would they take to address health, gender etc.?
+ # i.e. just connect farmers and consumers and allow htem to handle logistics
+ 
+ expected_cost_of_altervative <- vv(cost_of_establishment_meetings* 0.1, # ten percent of the meetings, but each year
+                                    var_CV = CV_value, n = number_of_years, 
+                                    relative_trend = inflation_rate)  
+ 
+ expected_benefit_of_altervative <- vv(diverse_veg_benefit,
+                                       var_CV = CV_value, n = number_of_years, 
+                                       relative_trend = inflation_rate)  
+ 
+ no_intervention_result <- expected_benefit_of_altervative - expected_cost_of_altervative
+ 
 # The difference is inherent in our calculation so we do not need the 
 # comparative NPV here, just discount the intervention result
 NPV_interv <-
   discount(sales_intervention_result, 
            discount_rate, calculate_NPV = TRUE)
 
+NPV_no_interv <-
+  discount(no_intervention_result, 
+           discount_rate, calculate_NPV = TRUE)
+
 # Beware, if you do not name your outputs (left-hand side of the equal sign) in the return section, 
 # the variables will be called output_1, _2, etc.
 
 return(list(NPV_mobile_sales = NPV_interv,
+            NPV_no_interv = NPV_no_interv,
             Cashflow_mobile_sales = sales_intervention_result))
 }
 
 women_assoc_results <- decisionSupport::mcSimulation(
   estimate = decisionSupport::estimate_read_csv("inputs_women_assoc.csv"),
   model_function = women_assoc_function,
-  numberOfModelRuns = 1e4, #run 10,000 times
+  numberOfModelRuns = 1e3, #run 1,000 times
   functionSyntax = "plainNames"
 )
 
 decisionSupport::plot_distributions(mcSimulation_object = women_assoc_results, 
-                                    vars = "NPV_mobile_sales",
+                                    vars = c("NPV_mobile_sales","NPV_no_interv"),
                                     method = 'smooth_simple_overlay', 
                                     base_size = 7)
 
 decisionSupport::plot_distributions(mcSimulation_object = women_assoc_results, 
-                                    vars = "NPV_mobile_sales",
+                                    vars = c("NPV_mobile_sales","NPV_no_interv"),
                                     method = 'boxplot')
 
 # Cashflow 
@@ -107,7 +128,7 @@ plot_pls(pls_result, input_table = input_table, threshold = 0)
 # by selecting the correct variables
 # be sure to run the multi_EVPI only on the variables that the we want
 mcSimulation_table <- data.frame(women_assoc_results$x, 
-                                 women_assoc_results$y[1])
+                                 women_assoc_results$y[1:2])
 
 evpi <- multi_EVPI(mc = mcSimulation_table, first_out_var = "NPV_mobile_sales")
 
