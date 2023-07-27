@@ -36,6 +36,47 @@ women_assoc_function <- function(x, varnames){
   
   # Benefits ####
   
+  # Add more information about accessibility
+  # Is the organization of the intervention aligned with 
+  # what people need? 
+  
+  if(poor_organization >= 0.3 | 
+     poor_management >= 0.3 |  
+     inconvenient >= 0.3 | 
+     family_cannot_travel_too_far >= 0.3 |
+     family_cannot_wait >= 0.3 |
+     unsuitable_day_of_sale >= 0.3){
+    
+    if_accessible * organization_access_reduction
+    
+  } else {
+    
+    if_accessible
+    
+  }
+  
+  # Do people go and get and also eat the veggies?
+  
+  if(taste_reduced >= 0.3 | 
+     family_does_not_like >= 0.3 |  
+     family_cannot_afford >= 0.3 | 
+     undesirable_change_of_veg >= 0.3 |
+     family_cannot_wait >= 0.3 |
+     dont_care  >= 0.3 |
+     dont_know  >= 0.3 | 
+     change_of_veg_source_undesirable  >= 0.3 | 
+     already_have_other_source  >= 0.3 | 
+     negative_rumors >= 0.3){
+    
+    if_accessible * organization_access_reduction
+    
+  } else {
+    
+    if_accessible
+    
+  }
+  
+  
   # here we need to think slightly differently about benefits
   # These are related to the savings in programs ... perhaps, 
   # although that is slightly low in the urban areas
@@ -55,31 +96,7 @@ women_assoc_function <- function(x, varnames){
                                 n = number_of_years, 
                                 relative_trend = inflation_rate) * if_accessible #conditional on access
 
-  # Add more information about accessibility
-  # Is the organization of the intervention aligned with 
-  # what people need? 
-  accessibility <- if(
-  poor_organization > .1 & 
-                  poor_management +
-                  inconvenient + 
-                  family_cannot_wait + 
-                  unsuitable_day_of_sale +
-                  family_cannot_travel_too_far
-            
   
-  # Do people go and get and also eat the veggies? 
-  access <- taste_reduced + 
-            family_does_not_like + 
-            family_cannot_afford + 
-            undesirable_change_of_veg +
-            dont_care + 
-            dont_know + 
-            change_of_veg_source_undesirable + 
-            already_have_other_source + 
-            negative_rumors + 
-            conflict_farmer_family
-    
-    
  sales_intervention_result <- total_benefits - total_costs
                         
 # Alternative ####
