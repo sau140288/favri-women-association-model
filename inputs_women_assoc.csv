@@ -30,3 +30,5 @@ already_have_other_source,0.05,,0.2,tnorm_0_1,chance of people already have othe
 negative_rumors,0.05,,0.1,tnorm_0_1,chance of negative rumors (%)
 conflict_farmer_buyer,0.1,,0.5,tnorm_0_1,chance of conflict between famer and buyer (%) 
 family_cannot_afford,0.1,,0.5,tnorm_0_1,chance of family cannot afford (%)
+access_threshold,0.6,,0.9,tnorm_0_1,threshold for chance of accesiblilty issue (%)
+access_reduction,0.05,,0.5,tnorm_0_1,amount of reduction in access to safe veg (%)
