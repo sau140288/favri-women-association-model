@@ -60,7 +60,7 @@ women_assoc_function <- function(x, varnames){
      already_have_other_source >= access_threshold | 
      negative_rumors >= access_threshold){
     
-    if_accessible * access_reduction
+    if_accessible - access_reduction
     
   } else {
     
