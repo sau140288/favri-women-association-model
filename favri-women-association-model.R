@@ -58,12 +58,13 @@ women_assoc_function <- function(x, varnames){
   # Add more information about accessibility
   # Is the organization of the intervention aligned with 
   # what people need? 
-  accessibility <- poor_organization + 
-    poor_management +
-    inconvenient + 
-    family_cannot_wait + 
-    unsuitable_day_of_sale +
-    family_cannot_travel_too_far
+  accessibility <- if(
+  poor_organization > .1 & 
+                  poor_management +
+                  inconvenient + 
+                  family_cannot_wait + 
+                  unsuitable_day_of_sale +
+                  family_cannot_travel_too_far
             
   
   # Do people go and get and also eat the veggies? 
