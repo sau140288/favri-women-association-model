@@ -40,42 +40,33 @@ women_assoc_function <- function(x, varnames){
   # Is the organization of the intervention aligned with 
   # what people need? 
   
-  if(poor_organization >= 0.3 | 
-     poor_management >= 0.3 |  
-     inconvenient >= 0.3 | 
-     family_cannot_travel_too_far >= 0.3 |
-     family_cannot_wait >= 0.3 |
-     unsuitable_day_of_sale >= 0.3){
-    
-    if_accessible * organization_access_reduction
-    
-  } else {
-    
-    if_accessible
-    
-  }
+  if(poor_organization >= access_threshold | 
+     poor_management >= access_threshold |  
+     inconvenient >= access_threshold | 
+     family_cannot_travel_too_far >= access_threshold |
+     family_cannot_wait >= access_threshold |
+     unsuitable_day_of_sale >= access_threshold |
   
   # Do people go and get and also eat the veggies?
   
-  if(taste_reduced >= 0.3 | 
-     family_does_not_like >= 0.3 |  
-     family_cannot_afford >= 0.3 | 
-     undesirable_change_of_veg >= 0.3 |
-     family_cannot_wait >= 0.3 |
-     dont_care  >= 0.3 |
-     dont_know  >= 0.3 | 
-     change_of_veg_source_undesirable  >= 0.3 | 
-     already_have_other_source  >= 0.3 | 
-     negative_rumors >= 0.3){
+     taste_reduced >= access_threshold | 
+     family_does_not_like >= access_threshold |  
+     family_cannot_afford >= access_threshold | 
+     undesirable_change_of_veg >= access_threshold |
+     family_cannot_wait >= access_threshold |
+     dont_care >= access_threshold |
+     dont_know >= access_threshold | 
+     change_of_veg_source_undesirable >= access_threshold | 
+     already_have_other_source >= access_threshold | 
+     negative_rumors >= access_threshold){
     
-    if_accessible * organization_access_reduction
+    if_accessible * access_reduction
     
   } else {
     
     if_accessible
     
   }
-  
   
   # here we need to think slightly differently about benefits
   # These are related to the savings in programs ... perhaps, 
