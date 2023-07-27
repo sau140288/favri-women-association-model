@@ -54,7 +54,31 @@ women_assoc_function <- function(x, varnames){
                                 var_CV = CV_value, 
                                 n = number_of_years, 
                                 relative_trend = inflation_rate) * if_accessible #conditional on access
-           
+
+  # Add more information about accessibility
+  # Is the organization of the intervention aligned with 
+  # what people need? 
+  accessibility <- poor_organization + 
+    poor_management +
+    inconvenient + 
+    family_cannot_wait + 
+    unsuitable_day_of_sale +
+    family_cannot_travel_too_far
+            
+  
+  # Do people go and get and also eat the veggies? 
+  access <- taste_reduced + 
+            family_does_not_like + 
+            family_cannot_afford + 
+            undesirable_change_of_veg +
+            dont_care + 
+            dont_know + 
+            change_of_veg_source_undesirable + 
+            already_have_other_source + 
+            negative_rumors + 
+            conflict_farmer_family
+    
+    
  sales_intervention_result <- total_benefits - total_costs
                         
 # Alternative ####
@@ -134,8 +158,9 @@ plot_pls(pls_result, input_table = input_table, threshold = 0)
 # by selecting the correct variables
 # be sure to run the multi_EVPI only on the variables that the we want
 mcSimulation_table <- data.frame(women_assoc_results$x, 
-                                 women_assoc_results$y[1:2])
+                                 women_assoc_results$y[1:3])
 
 evpi <- multi_EVPI(mc = mcSimulation_table, first_out_var = "NPV_mobile_sales")
 
 plot_evpi(evpi, decision_vars = "NPV_mobile_sales")
+plot_evpi(evpi, decision_vars = "decision")
