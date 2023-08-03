@@ -173,3 +173,7 @@ evpi <- multi_EVPI(mc = mcSimulation_table, first_out_var = "NPV_mobile_sales")
 
 plot_evpi(evpi, decision_vars = "NPV_mobile_sales")
 plot_evpi(evpi, decision_vars = "decision")
+
+# Get summary statistics
+summary(women_assoc_results$y$NPV_mobile_sales)
+
