@@ -1,15 +1,20 @@
-# FAVRI Women's association
+# FAVRI and the Viet Women's Union
 # mobile selling of safe vegetables
 
-library(decisionSupport)
-make_variables <- function(est, n = 1)
-{x <- decisionSupport::random(rho = est, n = n)
-for(i in colnames(x)) assign(i, as.numeric(x[1,i]), envir = .GlobalEnv)}
-
+# test model with a function to do one random draw of the model
+source("functions/make_variables.R")
+source("functions/estimate_read_csv.R")
 make_variables(estimate_read_csv(paste("inputs_women_assoc.csv", sep="")))
 
-source("chance_event.R")
-source("vv.R")
+# value varier function to add variability to values
+source("functions/vv.R")
+
+# chance event function to assess the chances 
+# mostly for risks
+source("functions/chance_event.R")
+
+# discount values for NPV (time value for money)
+source("functions/discount.R")
 
 # Model ####
 
@@ -40,6 +45,7 @@ women_assoc_function <- function(x, varnames){
   # Is the organization of the intervention aligned with 
   # what people need? 
   
+  # Risks ###
   if(poor_organization >= access_threshold | 
      poor_management >= access_threshold |  
      inconvenient >= access_threshold | 
@@ -60,7 +66,7 @@ women_assoc_function <- function(x, varnames){
      already_have_other_source >= access_threshold | 
      negative_rumors >= access_threshold){
     
-    if_accessible - access_reduction
+    if_accessible <- if_accessible - access_reduction
     
   } else {
     
@@ -125,44 +131,49 @@ return(list(NPV_mobile_sales = NPV_interv,
             Cashflow_mobile_sales = sales_intervention_result))
 }
 
-women_assoc_results <- decisionSupport::mcSimulation(
-  estimate = decisionSupport::estimate_read_csv("inputs_women_assoc.csv"),
+# Monte Carlo simulation 
+source("functions/mcSimulation.R")
+
+women_assoc_results <- mcSimulation(
+  estimate = estimate_read_csv("inputs_women_assoc.csv"),
   model_function = women_assoc_function,
   numberOfModelRuns = 1e3, #run 1,000 times
   functionSyntax = "plainNames"
 )
 
-decisionSupport::plot_distributions(mcSimulation_object = women_assoc_results, 
+# plot distributions for the two options
+source("functions/plot_distributions.R")
+plot_distributions(mcSimulation_object = women_assoc_results, 
                                     vars = c("NPV_mobile_sales","NPV_no_interv"),
                                     method = 'smooth_simple_overlay', 
                                     base_size = 7)
 
-decisionSupport::plot_distributions(mcSimulation_object = women_assoc_results, 
+plot_distributions(mcSimulation_object = women_assoc_results, 
                                     vars = c("NPV_mobile_sales","NPV_no_interv"),
                                     method = 'boxplot')
 
-decisionSupport::plot_distributions(mcSimulation_object = women_assoc_results, 
+plot_distributions(mcSimulation_object = women_assoc_results, 
                                     vars = "decision",
                                     method = 'smooth_simple_overlay', 
                                     base_size = 7)
 
-# Cashflow 
-
+# Cashflow of the mobile sales option
+source("functions/plot_cashflow.R")
 plot_cashflow(mcSimulation_object = women_assoc_results, 
               cashflow_var_name = "Cashflow_mobile_sales")
 
 # PLS
-
+source("functions/pls_model.R")
 pls_result <- plsr.mcSimulation(object = women_assoc_results,
                                 resultName = names(women_assoc_results$y)[1], 
                                 ncomp = 1)
 
 input_table <- read.csv("inputs_women_assoc.csv")
-
+source("functions/plot_pls.R")
 plot_pls(pls_result, input_table = input_table, threshold = 0)
 
 # EVPI 
-
+source("functions/multi_EVPI.R")
 #here we subset the outputs from the mcSimulation function (y) 
 # by selecting the correct variables
 # be sure to run the multi_EVPI only on the variables that the we want
@@ -171,9 +182,10 @@ mcSimulation_table <- data.frame(women_assoc_results$x,
 
 evpi <- multi_EVPI(mc = mcSimulation_table, first_out_var = "NPV_mobile_sales")
 
+source("functions/plot_evpi.R")
 plot_evpi(evpi, decision_vars = "NPV_mobile_sales")
 plot_evpi(evpi, decision_vars = "decision")
 
 # Get summary statistics
-summary(women_assoc_results$y$NPV_mobile_sales)
+summary(women_assoc_results$y$decision)
 
