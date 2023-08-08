@@ -45,6 +45,7 @@ women_assoc_function <- function(x, varnames){
   # Is the organization of the intervention aligned with 
   # what people need? 
   
+  # Risks ###
   if(poor_organization >= access_threshold | 
      poor_management >= access_threshold |  
      inconvenient >= access_threshold | 
@@ -65,7 +66,7 @@ women_assoc_function <- function(x, varnames){
      already_have_other_source >= access_threshold | 
      negative_rumors >= access_threshold){
     
-    if_accessible - access_reduction
+    if_accessible <- if_accessible - access_reduction
     
   } else {
     
