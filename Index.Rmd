@@ -11,88 +11,89 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Chance Event Function: Generating Conditional Values
 
-The `chance_event` function generates conditional values based on a given chance or probability.
+The `chance_event` function generates conditional values with: 
 
-1. **Generate Conditional Values**:
    \[
-   \text{occurrence} =
+   occurrence =
    \begin{cases}
-   \text{rbinom(length(value\_if), 1, chance)} & \text{if } \text{!one\_draw} \\
-   \text{rbinom(1, 1, chance)} & \text{if } \text{one\_draw}
+   rbinom(length(value\_if), 1, chance) & if  !one\_draw \\
+   rbinom(1, 1, chance) & if  one\_draw
    \end{cases}
    \]
    
-2. **Calculate Final Values**:
-   \[
-   \text{chance\_event} = \text{occurrence} \cdot value\_if + (1 - \text{occurrence}) \cdot value\_if\_not
-   \]
+and final values with: 
 
+   \[
+   chance\_event = occurrence \cdot value\_if + (1 - occurrence) \cdot value\_if\_not
+   \]
 
 ### Value Varier Function: Generating Synthetic Data
 
-## Value Varier Function: Mathematical Explanation
+```{r vv}
+source("functions/vv.R")
+```
 
-The `vv` function generates synthetic data with varying means and coefficients of variation. This process can be understood mathematically as follows:
+The `vv` function generates synthetic data with varying means and coefficients of variation with: 
 
-Given:
 - \( n \): Number of data points to generate.
-- \( \text{var\_mean} \): Mean value for the data.
-- \( \text{var\_CV} \): Coefficient of Variation (CV) for the data.
-- \( \text{distribution} \): Distribution of the data (e.g., normal distribution).
-- \( \text{absolute\_trend} \): Absolute trend to add to the data.
-- \( \text{relative\_trend} \): Relative trend to apply to the data.
-- \( \text{lower\_limit} \): Lower limit for generated data.
-- \( \text{upper\_limit} \): Upper limit for generated data.
+- \( var\_mean \): Mean value for the data.
+- \( var\_CV \): Coefficient of Variation (CV) for the data.
+- \( distribution \): Distribution of the data (e.g., normal distribution).
+- \( absolute\_trend \): Absolute trend to add to the data.
+- \( relative\_trend \): Relative trend to apply to the data.
+- \( lower\_limit \): Lower limit for generated data.
+- \( upper\_limit \): Upper limit for generated data.
 
-The process of generating synthetic data using the `vv` function can be outlined mathematically as:
+These are used to calculate annual means: 
 
-1. Calculate Annual Means:
    - If both absolute and relative trends are absent, the annual means remain constant:
+
      \[
-     \text{annual\_means} = \text{var\_mean}
+     annual\_means = var\_mean
      \]
+
    - If an absolute trend is present, annual means are adjusted linearly:
+
      \[
-     \text{annual\_means} = \text{var\_mean} + \text{absolute\_trend} \cdot (0, 1, \ldots, n-1)
+     annual\_means = var\_mean + absolute\_trend \cdot (0, 1, \ldots, n-1)
      \]
+
    - If only a relative trend is present, annual means change multiplicatively:
+
      \[
-     \text{annual\_means} = \text{var\_mean} \cdot (1 + \text{relative\_trend} / 100)^{(0, 1, \ldots, n-1)}
+     annual\_means = var\_mean \cdot (1 + relative\_trend / 100)^{(0, 1, \ldots, n-1)}
      \]
 
-2. Generate Data:
    - Generate random data points based on the specified distribution using calculated annual means:
+
      \[
-     \text{out} \sim \mathcal{N}(\text{annual\_means}, \lvert \text{annual\_means} \rvert \cdot \frac{\text{var\_CV}}{100})
+     out \sim \mathcal{N}(annual\_means, \lvert annual\_means \rvert \cdot \frac{var\_CV}{100})
      \]
 
-3. Apply Limits:
    - If specified, limit data points to the defined lower and upper limits:
+
      \[
-     \text{out} = \max(\text{out}, \text{lower\_limit}), \quad \text{out} = \min(\text{out}, \text{upper\_limit})
+     out = \max(out, lower\_limit), \quad out = \min(out, upper\_limit)
      \]
-
-The `vv` function's mathematical process provides a way to generate synthetic data with varying characteristics and trends, suitable for various analytical applications.
-
 
 ### Net Present Value (NPV)
-
-The formula we use for the NPV calculations:
 
 ```{r NPV}
 source("functions/discount.R")
 ```
 
-1. **Discounted Value at time \(t\)**:
-   The discounted value of a time series value \(x_t\) at time \(t\) can be calculated using the formula:
+The discounted value of a time series value \(x_t\) at time \(t\) can be calculated using the formula:
 
    \[
    \text{Discounted Value}_t = \frac{x_t}{\left(1 + \frac{\text{Discount Rate}}{100}\right)^{t-1}}
    \]
 
    Where:
+   
    - \(x_t\) is the value at time \(t\),
+   
    - \(\text{Discount Rate}\) is the discount rate provided to the function,
+   
    - \(t\) is the time period (starting from 1).
 
 2. **Net Present Value (NPV)** (if `calculate_NPV` is set to `TRUE`):
@@ -104,31 +105,32 @@ source("functions/discount.R")
 
    Where \(n\) is the number of time periods in the time series.
 
-
 ## Monte Carlo Simulation Function
+
+```{r MC}
+source("functions/mcSimulation.R")
+```
 
 The `mcSimulation` function performs Monte Carlo simulations to estimate model outputs based on provided parameters and a model function.
 
 ## Monte Carlo Simulation Process
 
-The Monte Carlo simulation process involves estimating model outputs by generating random input data and applying a model function to these inputs. The process can be mathematically represented as follows:
+The Monte Carlo simulation process generates a set of estimated model outputs based on random input samples, providing a distribution of potential outcomes including:
 
-1. **Random Input Generation**:
-   Let \( x_1, x_2, \ldots, x_n \) be a set of \( n \) random input samples drawn from a given distribution, representing the input parameters of the model.
+- random input generation with \( x_1, x_2, \ldots, x_n \) as a set of \( n \) random input samples drawn from a given distribution, representing the input parameters of the model.
 
-2. **Model Function**:
-   The model function \( f(x) \) maps the input data \( x \) to the corresponding model output \( y \). This can be expressed as:
+- a model function \( f(x) \) that maps the input data \( x \) to the corresponding model output \( y \). This can be expressed as:
+   
    \[
    y_i = f(x_i), \quad i = 1, 2, \ldots, n
    \]
 
-3. **Estimated Model Outputs**:
-   The estimated model outputs \( \hat{y}_1, \hat{y}_2, \ldots, \hat{y}_n \) are obtained by applying the model function to the random input samples:
+- Estimated model outputs \( \hat{y}_1, \hat{y}_2, \ldots, \hat{y}_n \) obtained by applying the model function to the random input samples:
+   
    \[
    \hat{y}_i = f(x_i), \quad i = 1, 2, \ldots, n
    \]
 
-The Monte Carlo simulation process generates a set of estimated model outputs based on random input samples, providing a distribution of potential outcomes and enabling statistical analysis of the model's behavior.
 
 
 
