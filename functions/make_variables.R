@@ -7,6 +7,9 @@
 # source("functions/random.R")
 source("functions/estimate_read_csv.R")
 
-make_variables <- function(est,n=1)
-{x <- decisionSupport::random(rho=est,n=n)
-for(i in colnames(x))assign(i, as.numeric(x[1,i]),envir=.GlobalEnv)}
+make_variables <- function(est, n = 1)
+{
+  x <- decisionSupport::random(rho = est, n = n)
+  for (i in colnames(x))
+    assign(i, as.numeric(x[1, i]), envir = .GlobalEnv)
+}

@@ -1,4 +1,4 @@
-# FAVRI Women's association
+# FAVRI and the Viet Women's Union
 # mobile selling of safe vegetables
 
 # test model with a function to do one random draw of the model
@@ -142,16 +142,16 @@ women_assoc_results <- mcSimulation(
 
 # plot distributions for the two options
 source("functions/plot_distributions.R")
-decisionSupport::plot_distributions(mcSimulation_object = women_assoc_results, 
+plot_distributions(mcSimulation_object = women_assoc_results, 
                                     vars = c("NPV_mobile_sales","NPV_no_interv"),
                                     method = 'smooth_simple_overlay', 
                                     base_size = 7)
 
-decisionSupport::plot_distributions(mcSimulation_object = women_assoc_results, 
+plot_distributions(mcSimulation_object = women_assoc_results, 
                                     vars = c("NPV_mobile_sales","NPV_no_interv"),
                                     method = 'boxplot')
 
-decisionSupport::plot_distributions(mcSimulation_object = women_assoc_results, 
+plot_distributions(mcSimulation_object = women_assoc_results, 
                                     vars = "decision",
                                     method = 'smooth_simple_overlay', 
                                     base_size = 7)
