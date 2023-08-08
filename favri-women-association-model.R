@@ -1,15 +1,20 @@
 # FAVRI Women's association
 # mobile selling of safe vegetables
 
-library(decisionSupport)
-make_variables <- function(est, n = 1)
-{x <- decisionSupport::random(rho = est, n = n)
-for(i in colnames(x)) assign(i, as.numeric(x[1,i]), envir = .GlobalEnv)}
-
+# test model with a function to do one random draw of the model
+source("functions/make_variables.R")
+source("functions/estimate_read_csv.R")
 make_variables(estimate_read_csv(paste("inputs_women_assoc.csv", sep="")))
 
-source("chance_event.R")
-source("vv.R")
+# value varier function to add variability to values
+source("functions/vv.R")
+
+# chance event function to assess the chances 
+# mostly for risks
+source("functions/chance_event.R")
+
+# discount values for NPV (time value for money)
+source("functions/discount.R")
 
 # Model ####
 
