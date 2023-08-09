@@ -164,7 +164,7 @@ plot_cashflow(mcSimulation_object = women_assoc_results,
 
 # PLS
 source("functions/pls_model.R")
-pls_result <- plsr.mcSimulation(object = women_assoc_results,
+pls_result <- pls_model(object = women_assoc_results,
                                 resultName = names(women_assoc_results$y)[1], 
                                 ncomp = 1)
 
