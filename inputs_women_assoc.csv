@@ -39,3 +39,6 @@ inconvenient,0.05,,0.5,tnorm_0_1,prob. that urban poor will find the access inco
 family_cannot_travel_too_far,0.05,,0.5,tnorm_0_1,prob. that urban poor will not be able to make  it to the location too far (%)
 family_cannot_wait,0.05,,0.5,tnorm_0_1,prob. that urban poor will not be able to wait for the sale day (%)
 unsuitable_day_of_sale,0.05,,0.5,tnorm_0_1,prob. that urban poor will not be able to make  the day of sale (%)
+,,,,,
+percent_veg_benefit_no_intervention,0.1,,0.5,tnorm_0_1,Relative percent vegetable benefits if only connect farmers and consumers (%)
+percent_meetings_no_intervention,0.2,,0.4,tnorm_0_1,Relative percent meetings required if only connect farmers and consumers (%)

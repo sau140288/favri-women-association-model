@@ -17,7 +17,7 @@ source("functions/chance_event.R")
 source("functions/discount.R")
 
 # Model ####
-
+# set.seed(1234) # to keep the same collection of results each time
 women_assoc_function <- function(x, varnames){
   
   # Cost####
@@ -100,7 +100,7 @@ women_assoc_function <- function(x, varnames){
 # what might the Women's Assoc. do instead 
  # with the same kinds of outcomes in mind
  # what action would they take to address health, gender etc.?
- # i.e. just connect farmers and consumers and allow htem to handle logistics
+ # i.e. just connect farmers and consumers and allow them to handle logistics
  
  expected_cost_of_altervative <- vv(cost_of_establishment_meetings* 0.1, # ten percent of the meetings, but each year
                                     var_CV = CV_value, n = number_of_years, 
