@@ -102,11 +102,11 @@ women_assoc_function <- function(x, varnames){
  # what action would they take to address health, gender etc.?
  # i.e. just connect farmers and consumers and allow them to handle logistics
  
- expected_cost_of_altervative <- vv(cost_of_establishment_meetings* 0.1, # ten percent of the meetings, but each year
+ expected_cost_of_altervative <- vv(cost_of_establishment_meetings * percent_meetings_no_intervention, # ten percent of the meetings, but each year
                                     var_CV = CV_value, n = number_of_years, 
                                     relative_trend = inflation_rate)  
  
- expected_benefit_of_altervative <- vv(diverse_veg_benefit,
+ expected_benefit_of_altervative <- vv(diverse_veg_benefit * percent_veg_benefit_no_intervention,
                                        var_CV = CV_value, n = number_of_years, 
                                        relative_trend = inflation_rate)  
  
