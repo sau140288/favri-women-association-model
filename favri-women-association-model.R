@@ -191,4 +191,11 @@ plot_evpi(evpi, decision_vars = "decision")
 # Get summary statistics
 summary(women_assoc_results$y$decision)
 
-
+# Calculate the percentage of positive numbers for the options
+source(file = "functions/percent_positive.R")
+percent_positive(model_result = 
+                   women_assoc_results$y$decision)
+percent_positive(model_result = 
+                   women_assoc_results$y$NPV_no_interv)
+percent_positive(model_result = 
+                   women_assoc_results$y$NPV_mobile_sales)
