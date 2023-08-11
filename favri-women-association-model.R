@@ -101,6 +101,7 @@ women_assoc_function <- function(x, varnames){
  # with the same kinds of outcomes in mind
  # what action would they take to address health, gender etc.?
  # i.e. just connect farmers and consumers and allow them to handle logistics
+ # use free space or very low rent space in culture house? 
  
  expected_cost_of_altervative <- vv(cost_of_establishment_meetings * percent_meetings_no_intervention, # ten percent of the meetings, but each year
                                     var_CV = CV_value, n = number_of_years, 
@@ -180,7 +181,8 @@ source("functions/multi_EVPI.R")
 mcSimulation_table <- data.frame(women_assoc_results$x, 
                                  women_assoc_results$y[1:3])
 
-evpi <- multi_EVPI(mc = mcSimulation_table, first_out_var = "NPV_mobile_sales")
+evpi <- multi_EVPI(mc = mcSimulation_table, 
+                   first_out_var = "NPV_mobile_sales")
 
 source("functions/plot_evpi.R")
 plot_evpi(evpi, decision_vars = "NPV_mobile_sales")
@@ -188,4 +190,5 @@ plot_evpi(evpi, decision_vars = "decision")
 
 # Get summary statistics
 summary(women_assoc_results$y$decision)
+
 

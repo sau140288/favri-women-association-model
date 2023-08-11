@@ -19,7 +19,7 @@ reputation_benefit,2,,8,posnorm,added economic benefit of reputation gains (mill
 environmental_benefit,3,,9,posnorm,saving on enviroment program (million VND/year)
 percentage_of_sales,10,,50,posnorm,Women's Union revenue from farmer's sales (million VND/year)
 ,,,,,
-if_accessible,0.4,,0.85,tnorm_0_1,general chance that veg are accessible (%) 
+if_accessible,0.7,,0.9,tnorm_0_1,general chance that veg are accessible (%) 
 taste_reduced,0.1,,0.5,tnorm_0_1,chance that veg taste is reduced (%)
 family_does_not_like,0.05,,0.1,tnorm_0_1,chance that family does not like that veg (%)
 undesirable_change_of_veg,0.1,,0.6,tnorm_0_1,chance of undersirable change of veg (%)
